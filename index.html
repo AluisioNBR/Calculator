@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Calculadora</h1>
+        </header>
+        <p class="visor" id="visor">...</p>
+        <div>
+            <button class="limpar" onclick="botaoLimpar()">Limpar</button>
+            <div class="teclado">
+                <button class="botao" id="sete" onclick="botao7()">7</button>
+                <button class="botao" id="oito" onclick="botao8()">8</button>
+                <button class="botao" id="nove" onclick="botao9()">9</button>
+                <button class="botao" id="dividir" onclick="botaoDivisao()">/</button>
+                <button class="botao" id="quatro" onclick="botao4()">4</button>
+                <button class="botao" id="cinco" onclick="botao5()">5</button>
+                <button class="botao" id="seis" onclick="botao6()">6</button>
+                <button class="botao" id="multiplicar" onclick="botaoMultiplicacao()">x</button>
+                <button class="botao" id="um" onclick="botao1()">1</button>
+                <button class="botao" id="dois" onclick="botao2()">2</button>
+                <button class="botao" id="tres" onclick="botao3()">3</button>
+                <button class="botao" id="subrair" onclick="botaoSubtracao()">-</button>
+                <button class="botao" id="pontoflutuante" onclick="botaoPontoFlutuante()">,</button>
+                <button class="botao" id="zero" onclick= "botao0()">0</button>
+                <button class="botao" id="enter" onclick="botaoEnter()">Enter</button>
+                <button class="botao" id="somar" onclick="botaoAdicao()">+</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

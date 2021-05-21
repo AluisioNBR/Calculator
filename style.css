@@ -1,0 +1,55 @@
+body{
+    font-family:'Oswald', sans-serif;
+    text-align: center;
+    font-weight: bold;
+    margin: 0px;
+    background-color:  rgb(172, 172, 172);
+}
+
+h1{
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 0px;
+    font-size: 420%;
+}
+
+.visor{
+    align-items: center;
+    background-color:  rgb(110, 110, 110);
+    width: 90%;
+    height: 190px;
+    padding-top: 5%;
+    margin-left: 5%;
+    border-radius: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    color: white;
+    font-size: 800%;
+    font-weight: bold;
+}
+
+.limpar{
+    font-size: 400%;
+    font-weight: bold;
+    width: 50%;
+}
+
+.teclado{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    margin-left: 0%;
+    width: 96%;
+    height: 40%;
+}
+
+.botao{
+    font-size: 200%;
+    font-weight: bold;
+    width: 99%;
+    height: 99%;
+    margin: 10%;
+    margin-top: 6%;
+    margin-right: 0%;  
+    align-items: center;
+}
