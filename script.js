@@ -1,208 +1,265 @@
-/*Declaração das variáveis principais
-visor: representa o elemento com o id "visor" | valorVisor e valorAtual: representam os valores que serão atualizados na tela
-valor: armazena os caracteres adicionados a expressão | valores e numeros: armazenam os valores para a execução das operações
-converter: transforma a string no número para a operação | indexValores: usado para percorrer a expressão 
-resultado: armazena os resultados das operações */
-var visor= document.getElementById("visor"), valorVisor= "", valorAtual= "";
-var valor= "", valores= [], numeros= [], converter, indexValores= 0, resultado= 0;
+const Viewer = {
+    viewer: document.getElementById('viewer'),
+    result: document.getElementById('resultMsg'),
+    
+    updateViewer(char){
+        this.viewer.value = this.viewer.value + char
+    },
+    
+    getExpression(){
+        let chars = this.viewer.value.split(''), tempNumber = [], expression = []
+        chars.push('')
 
-function botaoLimpar()
-{
-    //Essa função limpa o visor e zera todo e qualquer valor presente nas variáveis
-    valores= [];
-    indexValores= 0;
-    valorVisor= "";
-    valorAtual= "";
-    visor.innerHTML= "...";
-}
+        chars.forEach((char) => {
+            if (char == "+" || char == "-" || char == "x" || char == "/" || char == ''){
+                
+                let number = ""
+                tempNumber.forEach(num => {
+                    number = number + num
+                })
 
-function pedaco(valor)
-{
-    //Essa função executa a atualizacão de valores no visor e na expressão
-    valorAtual= valorAtual+valor;
-    valorVisor= valorVisor+valor;
-    visor.innerHTML= valorVisor;
-}
+                number = Number(number)
+                expression.push(number)
+                expression.push(char)
 
-function botao0()
-{
-    //Adiciona o valor 0 a expressão e ao visor
-    valor= "0";
-    pedaco(valor);
-}
+                tempNumber = []
+            }
+            else { tempNumber.push(char) }    
+        });
 
-function botao1()
-{
-    //Adiciona o valor 1 a expressão e ao visor
-    valor= "1";
-    pedaco(valor);
-}
+        expression.pop()
+        return expression
+    },
 
-function botao2()
-{
-    //Adiciona o valor 2 a expressão e ao visor
-    valor= "2";
-    pedaco(valor);
-}
+    operation(){
+        const expression = this.getExpression()
 
-function botao3()
-{
-    //Adiciona o valor 3 a expressão e ao visor
-    valor= "3";
-    pedaco(valor);
-}
+        let total = 0, index = 0
+        expression.forEach((char) => {
+            if(char == "+" || char == "-" || char == "x" || char == "/"){
+                let anIndex = index - 1, suIndex = index + 1, result = 0
 
-function botao4()
-{
-    //Adiciona o valor 4 a expressão e ao visor
-    valor= "4";
-    pedaco(valor);
-}
+                if(char == '+') result = expression[anIndex] + expression[suIndex]
+                else if(char == '-') result = expression[anIndex] - expression[suIndex]
+                else if(char == 'x') result = expression[anIndex] * expression[suIndex]
+                else if(char == '/') result = expression[anIndex] / expression[suIndex]
 
-function botao5()
-{
-    //Adiciona o valor 5 a expressão e ao visor
-    valor= "5";
-    pedaco(valor);
-}
+                total = total + result
+            }
 
-function botao6()
-{
-    //Adiciona o valor 6 a expressão e ao visor
-    valor= "6";
-    pedaco(valor);
-}
+            index++
+        })
 
-function botao7()
-{
-    //Adiciona o valor 7 a expressão e ao visor
-    valor= "7";
-    pedaco(valor);
-}
+        return total
+    },
 
-function botao8()
-{
-    //Adiciona o valor 8 a expressão e ao visor
-    valor= "8";
-    pedaco(valor);
-}
+    showResults(){
+        const result = this.operation()
 
-function botao9()
-{
-    //Adiciona o valor 9 a expressão e ao visor
-    valor= "9";
-    pedaco(valor);
-}
-
-function botaoPontoFlutuante()
-{
-    //Adiciona uma vírgula a expressão e ao visor
-    valor= ",";
-    pedaco(valor);
-}
-
-function pedaco2(valor)
-{
-    //Essa função adiciona operadores a expressão e ao visor
-    valores[indexValores]= valor;
-    indexValores+= 1;
-    valorVisor= valorVisor+valor;
-    visor.innerHTML= valorVisor;
-}
-
-function botaoAdicao()
-{
-    //Adiciona o operador + a expressão e ao visor
-    converter= parseFloat(valorAtual);
-    valores[indexValores]= converter;
-    valorAtual= "";
-    indexValores+= 1;
-    valor= "+";
-    pedaco2(valor);
-}
-
-function botaoSubtracao()
-{
-    //Adiciona o operador - a expressão e ao visor
-    converter= parseFloat(valorAtual);
-    valores[indexValores]= converter;
-    valorAtual= "";
-    indexValores+= 1;
-    valor= "-";
-    pedaco2(valor);
-}
-
-function botaoMultiplicacao()
-{
-    //Adiciona o operador X a expressão e ao visor
-    converter= parseFloat(valorAtual);
-    valores[indexValores]= converter;
-    valorAtual= "";
-    indexValores+= 1;
-    valor= "x";
-    pedaco2(valor);
-}
-
-function botaoDivisao()
-{
-    //Adiciona o operador / a expressão e ao visor
-    converter= parseFloat(valorAtual);
-    valores[indexValores]= converter;
-    valorAtual= "";
-    indexValores+= 1;
-    valor= "/";
-    pedaco2(valor);
-}
-
-function percorrerValores(x)
-{
-    //Essa função percorre a expressão para realizar as operações
-    var i1= 0, i2= 0;               //o valor de i1 e de i2 é 0
-    while(i1<=indexValores){        //enquanto o valor de i1 for menor que o de indexValores...
-        numeros[i2]= valores[i1]    //o valor do array numeros na posição de i2 recebe o valor de i1
-        i1+=2                       //i1 recebe mais 2
-        i2++                        //i2 recebe mais 1
+        Viewer.viewer.value = ""
+        Viewer.result.innerText = `O resultado é:\n${result}`
+        ResultPopUp.open()
     }
+}
 
-    var i=1;
-    while(i<indexValores){          //enquanto o valor de i for menor que indexValores...
-        if(valores[i] == "x"){
-            var num1= numeros[i-1], num2= numeros[i];
-            resultado= num1*num2;
-        } else {
-            if(valores[i] == "+") {
-                var num1= numeros[i-1], num2= numeros[i];
-                resultado= num1+num2;
-            }
-            if(valores[i] == "-"){
-                var num1= numeros[i-1], num2= numeros[i];
-                resultado= num1-num2;
-            }
+const Theme = {
+    themes(){
+        const themeList = document.getElementById('theme-list').classList
+        
+        if (themeList.contains('active')){
+            themeList.remove('active')
         }
-        if(valores[i] == "/"){
-            var num1= numeros[i-1], num2= numeros[i];
-            resultado= num1/num2;
-        } else {
-            if(valores[i] == "+") {
-                var num1= numeros[i-1], num2= numeros[i];
-                resultado= num1+num2;
-            }
-            if(valores[i] == "-"){
-                var num1= numeros[i-1], num2= numeros[i];
-                resultado= num1-num2;
-            }
+        else {
+            themeList.add('active')
         }
-        i+= 2
+    },
+
+    whiteTheme(){
+        const bodyBlack = document.body.classList
+
+        if (bodyBlack.contains('black-theme') || localStorage.getItem('theme') == 'black'){
+            const themeButton = document.getElementsByClassName('theme-button'), button = document.getElementsByClassName('button')
+
+            // Body, header, open-themes and theme-list theme black
+            bodyBlack.remove('black-theme')
+            document.getElementById('header').classList.remove('black-theme')
+            document.getElementById('open-themes').classList.remove('black-theme')
+            document.getElementById('theme-list').classList.remove('black-theme')
+            
+            // Theme button and viewer theme black
+            themeButton.item(0).classList.remove('black-theme')
+            themeButton.item(1).classList.remove('black-theme')
+            Viewer.viewer.classList.remove('black-theme')
+            
+            // Keyboard theme black
+            button.item(0).classList.remove('black-theme')
+            button.item(1).classList.remove('black-theme')
+            button.item(2).classList.remove('black-theme')
+            button.item(3).classList.remove('black-theme')
+            button.item(4).classList.remove('black-theme')
+            button.item(5).classList.remove('black-theme')
+            button.item(6).classList.remove('black-theme')
+            button.item(7).classList.remove('black-theme')
+            button.item(8).classList.remove('black-theme')
+            button.item(9).classList.remove('black-theme')
+            button.item(10).classList.remove('black-theme')
+            button.item(11).classList.remove('black-theme')
+            button.item(12).classList.remove('black-theme')
+            button.item(13).classList.remove('black-theme')
+            button.item(14).classList.remove('black-theme')
+            button.item(15).classList.remove('black-theme')
+            button.item(16).classList.remove('black-theme')
+
+            localStorage.setItem('theme', 'white')
+        }
+    },
+
+    blackTheme(){
+        const bodyBlack = document.body.classList
+
+        if (!bodyBlack.contains('black-theme') || localStorage.getItem('theme') == 'white'){
+            const themeButton = document.getElementsByClassName('theme-button'), button = document.getElementsByClassName('button')
+
+            // Body, header, open-themes and theme-list theme black
+            bodyBlack.add('black-theme')
+            document.getElementById('header').classList.add('black-theme')
+            document.getElementById('open-themes').classList.add('black-theme')
+            document.getElementById('theme-list').classList.add('black-theme')
+            
+            // Theme button and viewer theme black
+            themeButton.item(0).classList.add('black-theme')
+            themeButton.item(1).classList.add('black-theme')
+            Viewer.viewer.classList.add('black-theme')
+            
+            // Keyboard theme black
+            button.item(0).classList.add('black-theme')
+            button.item(1).classList.add('black-theme')
+            button.item(2).classList.add('black-theme')
+            button.item(3).classList.add('black-theme')
+            button.item(4).classList.add('black-theme')
+            button.item(5).classList.add('black-theme')
+            button.item(6).classList.add('black-theme')
+            button.item(7).classList.add('black-theme')
+            button.item(8).classList.add('black-theme')
+            button.item(9).classList.add('black-theme')
+            button.item(10).classList.add('black-theme')
+            button.item(11).classList.add('black-theme')
+            button.item(12).classList.add('black-theme')
+            button.item(13).classList.add('black-theme')
+            button.item(14).classList.add('black-theme')
+            button.item(15).classList.add('black-theme')
+            button.item(16).classList.add('black-theme')
+
+            localStorage.setItem('theme', 'black')
+        }
+    },
+}
+
+const ResultPopUp = {
+    pop: document.getElementById('resultContent').classList,
+    button: document.getElementById('msgClose'),
+    
+    open(){
+        this.pop.add('active')
+    },
+
+    close(){
+        ResultPopUp.pop.remove('active')
     }
 }
 
-function botaoEnter()
-{
-    //Essa função começa a dar o resultado da expressão
-    converter= parseFloat(valorAtual);
-    valores[indexValores]= converter;
-    for(var x= 1; x < indexValores; x++){
-        percorrerValores();
+const Keyboard = {
+    reset(){ Viewer.viewer.value = "" },
+    
+    button1(){ Viewer.updateViewer("1") },
+    
+    button2(){ Viewer.updateViewer("2") },
+    
+    button3(){ Viewer.updateViewer("3") },
+    
+    button4(){ Viewer.updateViewer("4") },
+    
+    button5(){ Viewer.updateViewer("5") },
+    
+    button6(){ Viewer.updateViewer("6") },
+    
+    button7(){ Viewer.updateViewer("7") },
+    
+    button8(){ Viewer.updateViewer("8") },
+    
+    button9(){ Viewer.updateViewer("9") },
+    
+    button0(){ Viewer.updateViewer("10") },
+    
+    buttonFloat(){ Viewer.updateViewer(".") },
+    
+    buttonEnter(){ Viewer.showResults() },
+    
+    buttonPlus(){ Viewer.updateViewer("+") },
+    
+    buttonMinus(){ Viewer.updateViewer("-") },
+    
+    buttonMultiply(){ Viewer.updateViewer("x") },
+    
+    buttonDivide(){ Viewer.updateViewer("/") }
+}
+
+const Buttons = {
+    openThemes: document.getElementById('open-themes'),
+    whiteTheme: document.getElementById('whiteButton'),
+    blackTheme: document.getElementById('blackButton'),
+    clean: document.getElementById('clean'),
+    
+    keyboard: {
+        button0: document.getElementById('button0'),
+        button1: document.getElementById('button1'),
+        button2: document.getElementById('button2'),
+        button3: document.getElementById('button3'),
+        button4: document.getElementById('button4'),
+        button5: document.getElementById('button5'),
+        button6: document.getElementById('button6'),
+        button7: document.getElementById('button7'),
+        button8: document.getElementById('button8'),
+        button9: document.getElementById('button9'),
+        buttonFloat: document.getElementById('buttonFloat'),
+        buttonPlus: document.getElementById('buttonPlus'),
+        buttonMinus: document.getElementById('buttonMinus'),
+        buttonMultiply: document.getElementById('buttonMultiply'),
+        buttonDivide: document.getElementById('buttonDivide'),
+        buttonEnter: document.getElementById('buttonEnter')
     }
-    visor.innerHTML= resultado
+}
+
+{
+    if(localStorage.getItem('theme') == 'black') Theme.blackTheme()
+    
+    else Theme.whiteTheme()
+}
+
+// Escopo para os eventos de click nos botões
+{
+    Buttons.openThemes.addEventListener('click', Theme.themes)
+    Buttons.whiteTheme.addEventListener('click', Theme.whiteTheme)
+    Buttons.blackTheme.addEventListener('click', Theme.blackTheme)
+    Buttons.clean.addEventListener('click', Keyboard.reset)
+    ResultPopUp.button.addEventListener('click', ResultPopUp.close)
+    
+    {
+        Buttons.keyboard.button0.addEventListener('click', Keyboard.button0)
+        Buttons.keyboard.button1.addEventListener('click', Keyboard.button1)
+        Buttons.keyboard.button2.addEventListener('click', Keyboard.button2)
+        Buttons.keyboard.button3.addEventListener('click', Keyboard.button3)
+        Buttons.keyboard.button4.addEventListener('click', Keyboard.button4)
+        Buttons.keyboard.button5.addEventListener('click', Keyboard.button5)
+        Buttons.keyboard.button6.addEventListener('click', Keyboard.button6)
+        Buttons.keyboard.button7.addEventListener('click', Keyboard.button7)
+        Buttons.keyboard.button8.addEventListener('click', Keyboard.button8)
+        Buttons.keyboard.button9.addEventListener('click', Keyboard.button9)
+        Buttons.keyboard.buttonFloat.addEventListener('click', Keyboard.buttonFloat)
+        Buttons.keyboard.buttonPlus.addEventListener('click', Keyboard.buttonPlus)
+        Buttons.keyboard.buttonMinus.addEventListener('click', Keyboard.buttonMinus)
+        Buttons.keyboard.buttonMultiply.addEventListener('click', Keyboard.buttonMultiply)
+        Buttons.keyboard.buttonDivide.addEventListener('click', Keyboard.buttonDivide)
+        Buttons.keyboard.buttonEnter.addEventListener('click', Keyboard.buttonEnter)
+    }
 }

@@ -1,37 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calculadora</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header>
-            <h1>Calculadora</h1>
-        </header>
-        <p class="visor" id="visor">...</p>
-        <div>
-            <button class="limpar" onclick="botaoLimpar()">Limpar</button>
-            <div class="teclado">
-                <button class="botao" id="sete" onclick="botao7()">7</button>
-                <button class="botao" id="oito" onclick="botao8()">8</button>
-                <button class="botao" id="nove" onclick="botao9()">9</button>
-                <button class="botao" id="dividir" onclick="botaoDivisao()">/</button>
-                <button class="botao" id="quatro" onclick="botao4()">4</button>
-                <button class="botao" id="cinco" onclick="botao5()">5</button>
-                <button class="botao" id="seis" onclick="botao6()">6</button>
-                <button class="botao" id="multiplicar" onclick="botaoMultiplicacao()">x</button>
-                <button class="botao" id="um" onclick="botao1()">1</button>
-                <button class="botao" id="dois" onclick="botao2()">2</button>
-                <button class="botao" id="tres" onclick="botao3()">3</button>
-                <button class="botao" id="subrair" onclick="botaoSubtracao()">-</button>
-                <button class="botao" id="pontoflutuante" onclick="botaoPontoFlutuante()">,</button>
-                <button class="botao" id="zero" onclick= "botao0()">0</button>
-                <button class="botao" id="enter" onclick="botaoEnter()">Enter</button>
-                <button class="botao" id="somar" onclick="botaoAdicao()">+</button>
-            </div>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js" defer></script>
+    <title>Calculadora</title>
+</head>
+<body>
+    <header id="header">
+        <h1>Calculadora</h1>
+        <button id="open-themes">Temas</button>
+        <ul id="theme-list" class="">
+            <li>
+                <button id="whiteButton" class="theme-button">Tema branco</button>
+            </li>
+
+            <li>
+                <button id="blackButton" class="theme-button">Tema preto</button>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <section id="viewer-conteiner">
+            <label for="viewer" hidden>Visor</label>
+            <input readonly type="text" name="viewer" id="viewer">
+            <button id="clean" class="button">Limpar</button>
+        </section>
+
+        <section id="keyboard">
+            <button id="button7" class="button">7</button>
+            <button id="button8" class="button">8</button>
+            <button id="button9" class="button">9</button>
+            <button id="buttonDivide" class="button">/</button>
+            <button id="button4" class="button">4</button>
+            <button id="button5" class="button">5</button>
+            <button id="button6" class="button">6</button>
+            <button id="buttonMultiply" class="button">x</button>
+            <button id="button1" class="button">1</button>
+            <button id="button2" class="button">2</button>
+            <button id="button3" class="button">3</button>
+            <button id="buttonMinus" class="button">-</button>
+            <button id="buttonFloat" class="button">,</button>
+            <button id="button0" class="button">0</button>
+            <button id="buttonEnter" class="button">Enter</button>
+            <button id="buttonPlus" class="button">+</button>
+        </section>
+    </main>
+
+    <div id="resultContent">
+        <div id="resultPopUp">
+            <p id="resultMsg">O resultado é: </p>
+            <button id="msgClose">Fechar</button>
         </div>
-        <script src="script.js"></script>
-    </body>
+    </div>
+</body>
 </html>
