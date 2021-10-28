@@ -33,22 +33,27 @@ const Viewer = {
 
     operation(){
         const expression = this.getExpression()
+        console.log(expression)
 
-        let total = 0, index = 0
-        expression.forEach((char) => {
+        let total = 0
+        for (let index = 0; index < expression.length; index++) {
+            let char = expression[index]
+            
             if(char == "+" || char == "-" || char == "x" || char == "/"){
                 let anIndex = index - 1, suIndex = index + 1, result = 0
 
                 if(char == '+') result = expression[anIndex] + expression[suIndex]
+
                 else if(char == '-') result = expression[anIndex] - expression[suIndex]
+
                 else if(char == 'x') result = expression[anIndex] * expression[suIndex]
+
                 else if(char == '/') result = expression[anIndex] / expression[suIndex]
 
-                total = total + result
+                total = result
+                expression[suIndex] = total
             }
-
-            index++
-        })
+        }
 
         return total
     },
@@ -189,7 +194,7 @@ const Keyboard = {
     
     button9(){ Viewer.updateViewer("9") },
     
-    button0(){ Viewer.updateViewer("10") },
+    button0(){ Viewer.updateViewer("0") },
     
     buttonFloat(){ Viewer.updateViewer(".") },
     
